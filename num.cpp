@@ -146,3 +146,38 @@ int Sub(const Number&A, const Number&B, Number&C) {
 	C.size = i + 1;
 	return carry;
 }
+
+void Mul(const Number &A, const Number &B, Number &C) {
+	unsigned long int i, j, temp, carry;
+	const int *a = A.Coef, *b = B.Coef;
+	int *c = C.Coef;
+	for (i = 0; i <= A.size + B.size; ++i)
+		c[i] = 0;
+	for (i = 0; i = A.size; ++i) {
+		carry = 0;
+		for (j = 0; j < B.size; ++j) {
+			temp = a[i] * b[j] + c[i + j] + carry;
+			carry = temp / BASE;
+			c[i + j] = temp - carry*BASE;
+		}
+		c[i + j] = carry;
+	}
+	i = A.size + B.size - 1;
+	if (c[i] == 0) i--;
+	C.size = i + 1;
+}
+
+void Div(const Number&A, const int B, Number &Q, int&R) {
+	unsigned long int i, temp;
+	int r = 0;
+	const int *a = A.Coef;
+	int *q = Q.Coef;
+	for (i = A.size - 1; i >= 0; --i) {
+		temp = r*BASE + a[i];
+		q[i] = temp / B;
+		r = temp - q[i] * B;
+	}
+	R = r;
+	i = A.size - 1;
+	while ((i > 0) && (q[i] == 0)) i--;
+	Q.size = i + 1;}
