@@ -97,15 +97,6 @@ const BigNumber operator + (BigNumber &left,BigNumber &right) {
 	return left;
 }
 
-const BigNumber BigNumber::operator +() const {
-	return BigNumber(*this);
-}
-
-const BigNumber BigNumber::operator-() const {
-	BigNumber copy(*this);
-	return copy;
-}
-
 bool operator !=(const BigNumber& left, const BigNumber& right) {
 	return !(left == right);
 }
