@@ -17,8 +17,27 @@ public:
 
 	friend std::ostream& operator<<(std::ostream& os, const BigNumber& BG);
 	operator std::string() const;
-	friend bool operator==(const BigNumber& left,const BigNumber&right);
-	friend const BigNumber operator + (BigNumber &left, const BigNumber &right);
+	
+	const BigNumber operator +() const;
+	const BigNumber operator -() const;
+	
+	BigNumber& operator -=(BigNumber value);
+	BigNumber& operator +=(BigNumber value);
+	BigNumber& operator *=(BigNumber value);
+	
+	friend bool operator==(const BigNumber& left, const BigNumber&right);
+	friend bool operator<(const BigNumber& left, const BigNumber&right);
+	friend bool operator !=(const BigNumber& left, const BigNumber& right);
+	friend bool operator <=(const BigNumber& left, const BigNumber& right);
+	friend bool operator >(const BigNumber& left, const BigNumber& right);
+	friend bool operator >=(const BigNumber& left, const BigNumber& right);
+	
+	friend const BigNumber operator + (BigNumber &left, BigNumber &right);
+	friend const BigNumber operator - (BigNumber &left, BigNumber &right);
+	friend const BigNumber operator * (BigNumber &left, BigNumber &right);
+	
+	BigNumber Karatsuba_mul(BigNumber& left, BigNumber& right);
+
 private:
 	std::vector <int> _number;
 };
