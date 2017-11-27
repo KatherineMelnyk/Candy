@@ -18,9 +18,6 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const BigNumber& BG);
 	operator std::string() const;
 	
-	const BigNumber operator +() const;
-	const BigNumber operator -() const;
-	
 	BigNumber& operator -=(BigNumber value);
 	BigNumber& operator +=(BigNumber value);
 	BigNumber& operator *=(BigNumber value);
