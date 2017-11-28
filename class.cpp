@@ -161,6 +161,33 @@ BigNumber operator *(BigNumber &left, BigNumber &right) {
 	return result;
 }
 
+BigNumber operator / (BigNumber&left, int &n) {
+	BigNumber result;
+	result._number.resize(left._number.size());
+	int ost = 0; 
+	for (int i = (result._number.size()-1); i >= 0; --i) {
+			int current = ost * BASE + left._number[i];
+			ost = current % n;
+			result._number[i] = current / n;
+	} 
+	if (!result._number[result._number.size() - 1] && result._number.size() != 1)
+		result._number.resize(result._number.size()-1);
+	return result;
+}
+
+int operator % (BigNumber &left, int &n) {
+	BigNumber result;
+	result._number.resize(left._number.size());
+	int ost = 0;
+	for (int i = (result._number.size() - 1); i >= 0; --i) {
+		int current = ost * BASE + left._number[i];
+		result._number[i] = current / n;
+		ost = current % n;
+	}
+	return ost;
+}
+
+
 BigNumber BigNumber::Karatsuba_mul(BigNumber& left, BigNumber& right) {
 	auto len = max(left._number.size(), right._number.size());
 	if (len < MIN_FOR_KARATSUBA) {
@@ -202,15 +229,28 @@ BigNumber BigNumber::Karatsuba_mul(BigNumber& left, BigNumber& right) {
 
 
 int main() {
-	BigNumber a("123456789129128818");
+	//BigNumber a("123456789129128818");
 	BigNumber b("123456789129128818");
-	BigNumber c("123456789");
-	BigNumber d("123456789");
-	cout << a << endl;
-	cout << a + c << endl;
-	cout << b - d << endl;
+	BigNumber c("12345");
+	BigNumber d("12345");
+	BigNumber f("1000");
+	BigNumber h("1000");
+	long long g = 100000000000000;
+	BigNumber e;
+	int a = 2;
+	cout << b / a  << endl;
+	cout << d % a << endl;
+	cout << c*d << endl;
+	/*cout << h / f << endl;*/
+	cout << e.Karatsuba_mul(c,d) << endl;
+	//cout << a << endl;
+	//cout << a + c << endl;
+	//cout << b - d << endl;
 	//cout << c - d << endl;
-	//cout << c * d << endl;
+	//cout << f*h << endl;
+	/*cout << c * d << endl;*/
+	cout << BigNumber(g) << endl;
+	/*cout << c * BigNumber(g) << endl;*/
 	system("pause");
 	return 0;
 }
