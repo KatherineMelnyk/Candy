@@ -84,7 +84,7 @@ bool operator<(const BigNumber& left, const BigNumber&right) {
 	}
 }
 
-const BigNumber operator + (BigNumber &left,BigNumber &right) {
+BigNumber operator + (BigNumber &left,BigNumber &right) {
 	int carry = 0;
 	for (size_t i = 0; i < std::max(left._number.size(), right._number.size()); ++i) {
 		if (left._number.size() == i)
@@ -125,7 +125,7 @@ BigNumber& BigNumber::operator *=(BigNumber value) {
 	return *this = (*this * value);
 }
 
-const BigNumber operator -(BigNumber &left,BigNumber &right) {
+BigNumber operator -(BigNumber &left,BigNumber &right) {
 	if (left == right) {
 		for (size_t i = 0; i < right._number.size(); ++i) {
 			left._number[i]=0;
@@ -146,7 +146,7 @@ const BigNumber operator -(BigNumber &left,BigNumber &right) {
 	return left;
 }
 
-const BigNumber operator *(BigNumber &left, BigNumber &right) {
+BigNumber operator *(BigNumber &left, BigNumber &right) {
 	BigNumber result;
 	result._number.resize(left._number.size() + right._number.size());
 	for (size_t i = 0; i < left._number.size(); ++i) {
@@ -191,18 +191,11 @@ BigNumber BigNumber::Karatsuba_mul(BigNumber& left, BigNumber& right) {
 	right_2.remove_leading_zeroes();
 	BigNumber Num_1 = Karatsuba_mul(left_1, right_1);
 	BigNumber Num_2 = Karatsuba_mul(left_2, right_2);
-	BigNumber left_1_result, right_1_result;
-	left_1_result._number.resize(k);
-	right_1_result._number.resize(k);
-	for (size_t i = 0; i < k; ++i) {
-		BigNumber a = left_1 + left_2;
-		BigNumber b = right_1 + right_2;
-		left_1_result._number[i] = a._number[i];
-		right_1_result._number[i] = b._number[i];
-	}
-	left_1_result.remove_leading_zeroes();
-	right_1_result.remove_leading_zeroes();
-	BigNumber Num_3 = Karatsuba_mul(left_1_result, right_1_result);
+	BigNumber Num_3 = Karatsuba_mul(left_2+left_1, right_1 + right_2);
+	long long a = pow(10, len);
+	long long b = pow(10, len/2);
+	result = Num_1*BigNumber(a) + (Num_3 - Num_1 - Num_2)*BigNumber(b) + Num_2;
+	return result;
 ...
 }
 
