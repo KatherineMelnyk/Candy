@@ -29,9 +29,9 @@ public:
 	friend bool operator >(const BigNumber& left, const BigNumber& right);
 	friend bool operator >=(const BigNumber& left, const BigNumber& right);
 	
-	friend const BigNumber operator + (BigNumber &left, BigNumber &right);
-	friend const BigNumber operator - (BigNumber &left, BigNumber &right);
-	friend const BigNumber operator * (BigNumber &left, BigNumber &right);
+	friend BigNumber operator + (BigNumber &left, BigNumber &right);
+	friend BigNumber operator - (BigNumber &left, BigNumber &right);
+	friend BigNumber operator * (BigNumber &left, BigNumber &right);
 	
 	BigNumber Karatsuba_mul(BigNumber& left, BigNumber& right);
 
