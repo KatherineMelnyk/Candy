@@ -161,6 +161,20 @@ BigNumber operator *(BigNumber &left, BigNumber &right) {
 	return result;
 }
 
+BigNumber operator * (BigNumber&left, int &n) {
+	BigNumber result;
+	result._number.resize(left._number.size());
+	int r = 0;
+	for (int i = 0; i < result._number.size(); i++) {
+		result._number[i] = left._number[i] * n + r;
+		r = result._number[i] / BASE;
+		result._number[i] -= r*BASE;
+	}
+	//if (result._number[result._number.size()])
+	//	result._number.resize(result._number.size() + 1);
+	return result;
+}
+
 BigNumber operator / (BigNumber&left, int &n) {
 	BigNumber result;
 	result._number.resize(left._number.size());
