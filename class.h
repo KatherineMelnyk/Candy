@@ -32,6 +32,7 @@ public:
 	friend BigNumber operator + (BigNumber &left, BigNumber &right);
 	friend BigNumber operator - (BigNumber &left, BigNumber &right);
 	friend BigNumber operator * (BigNumber &left, BigNumber &right);
+	friend BigNumber operator * (BigNumber &left, int &n);
 	friend BigNumber operator / (BigNumber &left, int &n);
 	friend int operator % (BigNumber &left, int &n);
 	
