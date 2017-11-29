@@ -177,6 +177,20 @@ BigNumber operator *(BigNumber &left, BigNumber &right) {
 	return result;
 }
 
+BigNumber operator / (BigNumber & left, BigNumber &right) {
+	BigNumber result;
+	result._number.resize(left._number.size());
+	int ost = 0;
+	for (int i = (result._number.size() - 1); i >= 0; --i) {
+		int current = ost * BASE + left._number[i];
+		ost = current % to_int(right);
+		result._number[i] = current / to_int(right);
+	}
+	if (!result._number[result._number.size() - 1] && result._number.size() != 1)
+		result._number.resize(result._number.size() - 1);
+	return result;
+}
+
 BigNumber operator * (BigNumber&left, int &n) {
 	BigNumber result;
 	result._number.resize(left._number.size());
@@ -274,6 +288,14 @@ BigNumber BigNumber::pow_(BigNumber &left) {
 		left /= b;
 	}
 	return result;
+}
+
+int to_int(BigNumber & number) {
+	int num = 0;
+	for (auto i = number._number.size(); i >= 1; --i) {
+		num += number._number[i-1] * pow(10,i-1);
+	}
+	return num;
 }
 
 int main() {
