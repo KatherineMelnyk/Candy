@@ -37,10 +37,8 @@ std::ostream& operator<<(std::ostream& os, const BigNumber& BN) {
 	if (BN._number.empty())
 		os << 0;
 	else {
-		char old_fill = os.fill('0');
 		for (long long i = static_cast <long long>(BN._number.size()) - 1; i >= 0; --i)
 			os << std::setw(1) << BN._number[i];
-		os.fill(old_fill);
 	}
 	return os;
 }
@@ -82,19 +80,6 @@ bool operator<(const BigNumber& left, const BigNumber&right) {
 		}
 		return false;
 	}
-}
-
-BigNumber operator + (BigNumber &left,BigNumber &right) {
-	int carry = 0;
-	for (size_t i = 0; i < std::max(left._number.size(), right._number.size()); ++i) {
-		if (left._number.size() == i)
-			left._number.push_back(0);
-		left._number[i] += carry + (i < right._number.size() ? right._number[i] : 0);
-		carry = left._number[i] >= BASE;
-		if (carry != 0)
-			left._number[i] -= BASE;
-	}
-	return left;
 }
 
 bool operator !=(const BigNumber& left, const BigNumber& right) {
@@ -141,23 +126,27 @@ BigNumber& BigNumber::operator/=(int n) {
 	return *this = (*this / n);
 }
 
-BigNumber operator -(BigNumber &left,BigNumber &right) {
-	if (left == right) {
-		for (size_t i = 0; i < right._number.size(); ++i) {
-			left._number[i]=0;
-		}
+BigNumber operator + (BigNumber &left,BigNumber &right) {
+	int carry = 0;
+	for (size_t i = 0; i < std::max(left._number.size(), right._number.size()); ++i) {
+		if (left._number.size() == i)
+			left._number.push_back(0);
+		left._number[i] += carry + right._number[i];
+		carry = left._number[i] >= BASE;
+		if (carry != 0)
+			left._number[i] -= BASE;
 	}
-	left.remove_leading_zeroes();
 	return left;
-	if (left > right) {
+}
+
+BigNumber operator -(BigNumber &left,BigNumber &right) {
 		int carry = 0;
 		for (size_t i = 0; i < right._number.size(); ++i) {
-			left._number[i] -= (carry + (i < right._number.size() ? right._number[i] : 0));
+			left._number[i] -= (carry + right._number[i]);
 			carry = left._number[i] < 0;
 			if (carry != 0)
 				left._number[i] += BASE;
 		}
-	}
 	left.remove_leading_zeroes();
 	return left;
 }
@@ -168,7 +157,7 @@ BigNumber operator *(BigNumber &left, BigNumber &right) {
 	for (size_t i = 0; i < left._number.size(); ++i) {
 		int carry = 0;
 		for (size_t j = 0; j < right._number.size() || carry != 0; ++j) {
-			long long current = result._number[i + j] + left._number[i] * 1LL * (j < right._number.size() ? right._number[j] : 0) + carry;
+			long long current = result._number[i + j] + left._number[i] * right._number[j] + carry;
 			result._number[i + j] = static_cast<int>(current%BASE);
 			carry = static_cast<int>(current / BASE);
 		}
