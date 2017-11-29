@@ -254,32 +254,38 @@ BigNumber BigNumber::Karatsuba_mul(BigNumber& left, BigNumber& right) {
 	result = Num_1*BigNumber(a) + (Num_3 - Num_1 - Num_2)*BigNumber(b) + Num_2;
 	return result;
 }
+ 
+bool BigNumber::odd() {
+	if (this->_number.size() == 0)
+		return false;
+	return this->_number[0] & 1;
+}
 
+bool BigNumber::even() {
+	return !this->odd();
+}
 
+BigNumber BigNumber::pow_(BigNumber &left) {
+	BigNumber a(*this), result(1);
+	while (left != 0) {
+		if (left.odd()) result *= a;
+		a *= a;
+		int b = 2;
+		left /= b;
+	}
+	return result;
+}
 
 int main() {
-	//BigNumber a("123456789129128818");
 	BigNumber b("123456789129128818");
 	BigNumber c("12345");
 	BigNumber d("12345");
 	BigNumber f("1000");
 	BigNumber h("1000");
-	long long g = 100000000000000;
 	BigNumber e;
 	int a = 2;
-	cout << b / a  << endl;
-	cout << d % a << endl;
-	cout << c*d << endl;
-	/*cout << h / f << endl;*/
-	cout << e.Karatsuba_mul(c,d) << endl;
-	//cout << a << endl;
-	//cout << a + c << endl;
-	//cout << b - d << endl;
-	//cout << c - d << endl;
-	//cout << f*h << endl;
-	/*cout << c * d << endl;*/
-	cout << BigNumber(g) << endl;
-	/*cout << c * BigNumber(g) << endl;*/
+	cout << c.pow_(h) << endl;
+	cout << f*d << endl;
 	system("pause");
 	return 0;
 }
