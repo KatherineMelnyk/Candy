@@ -31,6 +31,7 @@ public:
 	friend BigNumber operator - (BigNumber &left, BigNumber &right);
 	friend BigNumber operator * (BigNumber &left, BigNumber &right);
 	friend BigNumber operator / (BigNumber &left, BigNumber &right);
+	friend BigNumber operator % (BigNumber &left, BigNumber &right);
 	
 	BigNumber& operator -=(BigNumber value);
 	BigNumber& operator +=(BigNumber value);
