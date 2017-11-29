@@ -121,8 +121,24 @@ BigNumber& BigNumber::operator -=(BigNumber value) {
 	return *this = (*this - value);
 }
 
+BigNumber BigNumber::operator++() {
+	return (*this) += 1;
+}
+
+BigNumber BigNumber::operator--() {
+	return (*this) -= 1;
+}
+
 BigNumber& BigNumber::operator *=(BigNumber value) {
 	return *this = (*this * value);
+}
+
+BigNumber& BigNumber::operator*=(int n) {
+	return *this = (*this * n);
+}
+
+BigNumber& BigNumber::operator/=(int n) {
+	return *this = (*this / n);
 }
 
 BigNumber operator -(BigNumber &left,BigNumber &right) {
@@ -237,7 +253,6 @@ BigNumber BigNumber::Karatsuba_mul(BigNumber& left, BigNumber& right) {
 	long long b = pow(10, len/2);
 	result = Num_1*BigNumber(a) + (Num_3 - Num_1 - Num_2)*BigNumber(b) + Num_2;
 	return result;
-...
 }
 
 
