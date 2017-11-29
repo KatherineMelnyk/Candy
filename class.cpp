@@ -180,6 +180,18 @@ BigNumber operator / (BigNumber & left, BigNumber &right) {
 	return result;
 }
 
+BigNumber operator % (BigNumber &left, BigNumber &right) {
+	BigNumber result;
+	long long ost = 0;
+	result._number.resize(left._number.size());
+	for (int i = (result._number.size() - 1); i >= 0; --i) {
+		int current = ost * BASE + left._number[i];
+		result._number[i] = current / to_int(right);
+		ost = current % to_int(right);
+	}
+	return BigNumber(ost);
+}
+
 BigNumber operator * (BigNumber&left, int &n) {
 	BigNumber result;
 	result._number.resize(left._number.size());
