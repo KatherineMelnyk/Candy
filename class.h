@@ -5,7 +5,6 @@
 #include <iomanip>
 #include <sstream>
 
-
 static const int BASE = 10;
 
 class BigNumber {
@@ -31,6 +30,7 @@ public:
 	friend BigNumber operator + (BigNumber &left, BigNumber &right);
 	friend BigNumber operator - (BigNumber &left, BigNumber &right);
 	friend BigNumber operator * (BigNumber &left, BigNumber &right);
+	friend BigNumber operator / (BigNumber &left, BigNumber &right);
 	
 	BigNumber& operator -=(BigNumber value);
 	BigNumber& operator +=(BigNumber value);
@@ -50,3 +50,5 @@ private:
 	bool odd();
 	bool even();
 };
+
+int to_int(BigNumber &number);
