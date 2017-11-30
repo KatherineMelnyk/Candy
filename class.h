@@ -36,11 +36,11 @@ public:
 	BigNumber& operator -=(BigNumber value);
 	BigNumber& operator +=(BigNumber value);
 	BigNumber& operator *=(BigNumber value);
+	BigNumber& operator /=(BigNumber value);
+	BigNumber& operator %=(BigNumber value);
+	
 	BigNumber& operator*= (int n);
 	BigNumber& operator/= (int n);
-	
-	BigNumber operator --();
-	BigNumber operator ++();
 	
 	BigNumber pow_(BigNumber &left);
 	BigNumber Karatsuba_mul(BigNumber& left, BigNumber& right);
@@ -53,3 +53,7 @@ private:
 };
 
 int to_int(BigNumber &number);
+
+//for Miller
+BigNumber gcd(BigNumber &left, BigNumber &right);
+bool even(BigNumber &left);
