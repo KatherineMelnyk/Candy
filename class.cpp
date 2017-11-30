@@ -106,16 +106,16 @@ BigNumber& BigNumber::operator -=(BigNumber value) {
 	return *this = (*this - value);
 }
 
-BigNumber BigNumber::operator++() {
-	return (*this) += 1;
-}
-
-BigNumber BigNumber::operator--() {
-	return (*this) -= 1;
-}
-
 BigNumber& BigNumber::operator *=(BigNumber value) {
 	return *this = (*this * value);
+}
+
+BigNumber& BigNumber::operator %= (BigNumber value) {
+	return *this = (*this % value);
+}
+
+BigNumber& BigNumber::operator/= (BigNumber value) {
+	return *this = (*this / value);
 }
 
 BigNumber& BigNumber::operator*=(int n) {
@@ -297,6 +297,47 @@ int to_int(BigNumber & number) {
 		num += number._number[i-1] * pow(10,i-1);
 	}
 	return num;
+}
+
+bool even(BigNumber &left) {
+	int a = 2;
+	if (left % a == 0)
+		return true;
+	else 
+		return false;
+}
+
+void swap(BigNumber&left, BigNumber &right) {
+	BigNumber a = left;
+	left = right;
+	right = a;
+}
+
+BigNumber gcd(BigNumber &left, BigNumber &right) {
+	while (to_int(right)) {
+		left%=right;
+		swap(left, right);
+	}
+	return left;
+}
+
+void transform(BigNumber & a, BigNumber& b, BigNumber &c) {
+	int pow = 0, two = 2;
+	while (a != 0) {
+		a /= two;
+		if ((a %= two) == 0)
+			pow++;
+	}
+	c = BigNumber(pow);
+	b = a / (BigNumber(two).pow_(c));
+}
+
+BigNumber powmod(BigNumber a, BigNumber k, BigNumber& left) {
+	return a.pow_(k) % left;
+}
+
+BigNumber mulmod(BigNumber a, BigNumber b, BigNumber &left) {
+	return (a *= b) % left;
 }
 
 int main() {
